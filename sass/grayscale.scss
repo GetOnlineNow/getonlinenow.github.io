@@ -129,7 +129,7 @@ a {
     padding: 100px 0;
     text-align: center;
     color: white;
-    background: url(../img/intro-bg.jpg) no-repeat bottom center scroll;
+    background: url(../img/bw_sm_stairs.jpg) no-repeat bottom center scroll;
     background-color: black;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -236,11 +236,11 @@ a {
     padding-top: 100px;
 }
 
-.download-section {
+.contact-section {
     width: 100%;
     padding: 50px 0;
     color: white;
-    background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
+    background: url(../img/bw_sm_tincan_phone.jpg) no-repeat center center scroll;
     background-color: black;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -338,4 +338,58 @@ img::-moz-selection {
 
 body {
     -webkit-tap-highlight-color: rgba(white, 0.2);
+}
+
+// user-defined
+.fineprint {
+  font-size: 50%;
+  font-style: italic;
+  text-transform: capitalize;
+  top: -1.25em;
+}
+
+.fineprint-section {
+    width: 100%;
+    padding: 50px 0;
+    color: white;
+    background: url(../img/bw_sm_fineprint.jpg) no-repeat center center scroll;
+    background-color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    h5 {
+      margin-top: 7px;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    ul {
+      list-style-position: inside;
+      text-align: left;
+    }
+}
+
+.preview-panel {
+    text-align: center;
+    background-color: #f5f5f5;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    border-bottom: 3px solid #eeeeee;
+    position: relative;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.preview-panel a img {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
