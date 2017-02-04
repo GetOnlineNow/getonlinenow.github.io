@@ -1,48 +1,185 @@
-//<!-- Loading jQuery Easing plugin asynchronously (thanks to http://idiallo.com/javascript/async-jquery) -->
-//<script>
-//(function () {
-function jqueryEasing() {
-    var done = false;
-    var script = document.createElement("script"),
-    head = document.getElementsByTagName("head")[0] || document.documentElement;
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js';
-    script.type = 'text/javascript'; 
-    script.async = true;
-    script.onload = script.onreadystatechange = function() {
-        if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
-            done = true;
-            // Process async variable
-            var async = async || [];
-            while(async.length) { // there is some syncing to be done
-                var obj = async.shift();
-                if (obj[0] =="ready") {
-                    $(obj[1]);
-                }else if (obj[0] =="load"){
-                    $(window).load(obj[1]);
-                }
-            }
-            async = {
-                push: function(param){
-                    if (param[0] =="ready") {
-                        $(param[1]);
-                    }else if (param[0] =="load"){
-                        $(window).load(param[1]);
-                    }
-                }
-            };
-            // End of processing
-            script.onload = script.onreadystatechange = null;
-            if (head && script.parentNode) {
-                head.removeChild(script);
-            }
-        }
+// jQuery to collapse the navbar on scroll
+function collapseNavbar() {
+    if ($(".navbar").offset().top > 50) {
+        $(".navbar-fixed-top").addClass("top-nav-collapse");
+    } else {
+        $(".navbar-fixed-top").removeClass("top-nav-collapse");
+    }
+}
+
+$(window).scroll(collapseNavbar);
+$(document).ready(collapseNavbar);
+
+// jQuery for page scrolling feature - requires jQuery Easing plugin
+$(function() {
+    $('a.page-scroll').bind('click', function(event) {
+        var $anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top
+        }, 1500, 'easeInOutExpo');
+        event.preventDefault();
+    });
+});
+
+// Closes the Responsive Menu on Menu Item Click
+$('.navbar-collapse ul li a').click(function() {
+    $(this).closest('.collapse').collapse('toggle');
+});
+
+// get user Lat and Lon
+var myLat;var myLon;
+$(function(){$.getJSON('https://ipinfo.io/geo',
+  function(response){var loc=response.loc.split(',');
+  var coords={latitude:loc[0],longitude:loc[1]};myLat=coords.latitude;myLon=coords.longitude;});});
+// Google Maps Scripts
+var map = null;
+// When the window has finished loading create our google map below
+google.maps.event.addDomListener(window, 'load', init);
+google.maps.event.addDomListener(window, 'resize', function() {
+    map.setCenter(new google.maps.LatLng(myLat,myLon));
+});
+
+function init() {
+    // Basic options for a simple Google Map
+    // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+    var mapOptions = {
+        // How zoomed in you want the map to start at (always required)
+        zoom: 12,
+
+        // The latitude and longitude to center the map (always required)
+        center: new google.maps.LatLng(myLat,myLon), // New York
+
+        // Disables the default Google Maps UI components
+        disableDefaultUI: true,
+        scrollwheel: false,
+        draggable: false,
+
+        // How you would like to style the map. 
+        // This is where you would paste any style found on Snazzy Maps.
+        styles: [{
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 17
+            }]
+        }, {
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 20
+            }]
+        }, {
+            "featureType": "road.highway",
+            "elementType": "geometry.fill",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 17
+            }]
+        }, {
+            "featureType": "road.highway",
+            "elementType": "geometry.stroke",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 29
+            }, {
+                "weight": 0.2
+            }]
+        }, {
+            "featureType": "road.arterial",
+            "elementType": "geometry",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 18
+            }]
+        }, {
+            "featureType": "road.local",
+            "elementType": "geometry",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 16
+            }]
+        }, {
+            "featureType": "poi",
+            "elementType": "geometry",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 21
+            }]
+        }, {
+            "elementType": "labels.text.stroke",
+            "stylers": [{
+                "visibility": "on"
+            }, {
+                "color": "#000000"
+            }, {
+                "lightness": 16
+            }]
+        }, {
+            "elementType": "labels.text.fill",
+            "stylers": [{
+                "saturation": 36
+            }, {
+                "color": "#000000"
+            }, {
+                "lightness": 40
+            }]
+        }, {
+            "elementType": "labels.icon",
+            "stylers": [{
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "transit",
+            "elementType": "geometry",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 19
+            }]
+        }, {
+            "featureType": "administrative",
+            "elementType": "geometry.fill",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 20
+            }]
+        }, {
+            "featureType": "administrative",
+            "elementType": "geometry.stroke",
+            "stylers": [{
+                "color": "#000000"
+            }, {
+                "lightness": 17
+            }, {
+                "weight": 1.2
+            }]
+        }]
     };
-head.insertBefore(script, head.firstChild);
-};
-//})();
-//</script>
-//<!-- end Loading jQuery Easing plugin asynchronously -->
 
-function collapseNavbar(){if($(".navbar").offset().top>50){$(".navbar-fixed-top").addClass("top-nav-collapse");}else{$(".navbar-fixed-top").removeClass("top-nav-collapse");}}$(window).scroll(collapseNavbar);$(document).ready(collapseNavbar);$(function(){$('a.page-scroll').bind('click',function(event){var $anchor=$(this);$('html, body').stop().animate({scrollTop:$($anchor.attr('href')).offset().top},1500,'easeInOutExpo');event.preventDefault();});});$('.navbar-collapse ul li a').click(function(){$(this).closest('.collapse').collapse('toggle');});var myLat;var myLon;$(function(){$.getJSON('https://ipinfo.io/geo',function(response){var loc=response.loc.split(',');var coords={latitude:loc[0],longitude:loc[1]};myLat=coords.latitude;myLon=coords.longitude;});});var map=null;google.maps.event.addDomListener(window,'load',init);google.maps.event.addDomListener(window,'resize',function(){map.setCenter(new google.maps.LatLng(myLat,myLon));});
+    // Get the HTML DOM element that will contain your map 
+    // We are using a div with id="map" seen below in the <body>
+    var mapElement = document.getElementById('map');
 
-function init(){var mapOptions={zoom:12,center:new google.maps.LatLng(myLat,myLon),disableDefaultUI:true,scrollwheel:false,draggable:false,styles:[{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]}]};var mapElement=document.getElementById('map');map=new google.maps.Map(mapElement,mapOptions);var image='img/map-marker.svg';var myLatLng=new google.maps.LatLng(myLat,myLon);var beachMarker=new google.maps.Marker({position:myLatLng,map:map,icon:image});}
+    // Create the Google Map using out element and options defined above
+    map = new google.maps.Map(mapElement, mapOptions);
+
+    // Custom Map Marker Icon - Customize the map-marker.png file to customize your icon
+    var image='img/map-marker.svg';
+    var myLatLng=new google.maps.LatLng(myLat,myLon);
+    var beachMarker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        icon: image
+    });
+}
+
