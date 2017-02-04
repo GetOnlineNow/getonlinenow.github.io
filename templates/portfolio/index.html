@@ -21,48 +21,6 @@
 
     </script>
     <!-- end Google Analytics -->
-    <!-- Loading jQuery asynchronously  (thanks to http://idiallo.com/javascript/async-jquery) -->
-    <script>
-    (function () {
-        var done = false;
-        var script = document.createElement("script"),
-        head = document.getElementsByTagName("head")[0] || document.documentElement;
-        script.src = 'vendor/jquery/jquery.min.js';
-        script.type = 'text/javascript'; 
-        script.async = true;
-        script.onload = script.onreadystatechange = function() {
-            if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
-                done = true;
-                // Process async variable
-                var async = async || [];
-                while(async.length) { // there is some syncing to be done
-                    var obj = async.shift();
-                    if (obj[0] =="ready") {
-                        $(obj[1]);
-                    }else if (obj[0] =="load"){
-                        $(window).load(obj[1]);
-                    }
-                }
-                async = {
-                    push: function(param){
-                        if (param[0] =="ready") {
-                            $(param[1]);
-                        }else if (param[0] =="load"){
-                            $(window).load(param[1]);
-                        }
-                    }
-                };
-                // End of processing
-                script.onload = script.onreadystatechange = null;
-                if (head && script.parentNode) {
-                    head.removeChild(script);
-                }
-            }
-        };
-    head.insertBefore(script, head.firstChild);
-    })();
-    </script>
-    <!-- end Loading jQuery asynchronously-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -327,13 +285,13 @@
     </footer>
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js" async></script>
+    <script src="vendor/jquery/jquery.min.js" ></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js" async></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js" ></script>
 
     <!-- Custom Theme JavaScript -->
-    <script async>
+    <script>
     // Closes the sidebar menu
     $("#menu-close").click(function(e) {
         e.preventDefault();
